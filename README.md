@@ -1,8 +1,3 @@
----
-
-# **README do Backend**
-
-```markdown
 # Feiras-AL Backend
 
 Backend do projeto **Feiras-AL**, desenvolvido com **Node.js**, **Express** e **MongoDB**.  
