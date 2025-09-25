@@ -12,6 +12,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors({ origin: `${process.env.URL_SERVER_FRONT}` }));
+app.use(cors())
 app.use(express.json());
 app.use(clerkMiddleware());
 
