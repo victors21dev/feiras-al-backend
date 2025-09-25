@@ -15,7 +15,7 @@ router.post(
       return res.status(500).send('Webhook secret não configurado no .env');
     }
     const headers = req.headers;
-    const payload = req.body; // ✅ 'payload' é declarada aqui
+    const payload = req.body;
     const svix_id = headers["svix-id"] as string;
     const svix_timestamp = headers["svix-timestamp"] as string;
     const svix_signature = headers["svix-signature"] as string;

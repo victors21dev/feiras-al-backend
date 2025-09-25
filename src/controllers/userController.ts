@@ -6,7 +6,7 @@ import { Clerk } from '@clerk/clerk-sdk-node';
 const clerkClient = Clerk({ secretKey: process.env.CLERK_SECRET_KEY });
 
 export const syncUser = async (req: Request, res: Response) => {
-  console.log("--- LOG 1: Controller syncUser iniciado. ---");
+  console.log("Controller syncUser iniciado. ---");
 
   try {
     const { userId } = req.auth;
@@ -15,18 +15,18 @@ export const syncUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Clerk ID não encontrado' });
     }
 
-    console.log(`LOG 2: Procurando no MongoDB por um usuário com Clerk ID: ${userId}`);
+    console.log(`Procurando no MongoDB por um usuário com Clerk ID: ${userId}`);
     let userInDb = await User.findOne({ clerkId: userId });
-    console.log("LOG 3: Busca no MongoDB concluída.");
+    console.log("Busca no MongoDB concluída.");
 
     if (userInDb) {
-      console.log("LOG 4: Usuário já existe. Enviando resposta de sucesso.");
+      console.log("Usuário já existe. Enviando resposta de sucesso.");
       return res.status(200).json(userInDb);
     }
 
     console.log("LOG 5: Usuário não encontrado no DB. Buscando dados na API do Clerk...");
     const clerkUser = await clerkClient.users.getUser(userId);
-    console.log("LOG 6: Dados do Clerk recebidos com sucesso.");
+    console.log("Dados do Clerk recebidos com sucesso.");
 
     const newUser = new User({
       clerkId: clerkUser.id,
@@ -37,12 +37,12 @@ export const syncUser = async (req: Request, res: Response) => {
 
     console.log("LOG 7: Salvando novo usuário no MongoDB...");
     await newUser.save();
-    console.log("✅ LOG 8: Usuário salvo com sucesso!");
+    console.log("Usuário salvo com sucesso!");
     
     return res.status(201).json(newUser);
 
   } catch (error) {
-    console.error("--- ❌ LOG DE ERRO no controller syncUser ---", error);
+    console.error("LOG DE ERRO no controller syncUser ---", error);
     return res.status(500).json({ message: 'Erro interno ao sincronizar usuário.' });
   }
 };
