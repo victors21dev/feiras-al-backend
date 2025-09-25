@@ -1,6 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-
-export interface IEvent extends Document {
+import mongoose, { Schema } from "mongoose";
+export interface IEvent {
   title: string;
   description: string;
   date: Date;
